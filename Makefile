@@ -12,6 +12,9 @@ default:
 		node \
 		sh -c 'npm install; REACT_NATIVE_PACKAGER_HOSTNAME="$(IP)" npm start -- --reset-cache'
 
+nodocker:
+	npm install; npm start
+
 node:
 	docker container run --rm -it \
 		-v $(PWD):/usr/src/app \
