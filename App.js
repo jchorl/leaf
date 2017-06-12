@@ -1,7 +1,13 @@
 import React from 'react';
 import { View, StatusBar } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducers from './reducers';
 import TransactionForm from './components/TransactionForm';
+import TransactionList from './components/TransactionList';
 import db from './DB';
+
+let store = createStore(reducers);
 
 export default class App extends React.Component {
     componentDidMount() {
@@ -20,10 +26,13 @@ export default class App extends React.Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
-                <StatusBar hidden={true} />
-                <TransactionForm />
-            </View>
-        );
+                <Provider store={ store }>
+                    <View style={{ flex: 1 }}>
+                        <StatusBar hidden={true} />
+                        <TransactionForm />
+                        <TransactionList />
+                    </View>
+                </Provider>
+                );
     }
 }

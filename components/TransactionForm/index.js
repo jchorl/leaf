@@ -1,8 +1,15 @@
 import React from 'react';
 import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { transactionsUpdated } from '../../actions';
 import db from '../../DB';
 
-export default class TransactionForm extends React.Component {
+class TransactionForm extends React.Component {
+    static propTypes = {
+        dispatch: PropTypes.func.isRequired
+    }
+
     constructor() {
         super();
         this.state = {
@@ -13,14 +20,9 @@ export default class TransactionForm extends React.Component {
     }
 
     update = () => {
-        console.log('update called');
-        db.transaction(tx => {
-            tx.executeSql(
-                `select * from transactions;`,
-                [],
-                (_, { rows: { _array } }) => console.log(_array)
-            );
-        });
+        const { dispatch } = this.props;
+
+        dispatch(transactionsUpdated());
     }
 
     onSubmit = () => {
@@ -82,3 +84,5 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 });
+
+export default connect()(TransactionForm);

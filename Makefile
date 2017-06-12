@@ -10,7 +10,7 @@ default:
 		-p 19000:19000 \
 		-p 19001:19001 \
 		node \
-		sh -c 'npm install; REACT_NATIVE_PACKAGER_HOSTNAME="$(IP)" npm start -- --reset-cache'
+		sh -c 'yarn; REACT_NATIVE_PACKAGER_HOSTNAME="$(IP)" yarn start -- --reset-cache'
 
 nodocker:
 	npm install; npm start
