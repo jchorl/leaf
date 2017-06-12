@@ -12,7 +12,8 @@ export default class App extends React.Component {
                     name TEXT,
                     category TEXT,
                     amount INT
-                );`
+                );
+                CREATE INDEX transactions_category_idx ON transactions (category);`
             );
         });
     }
