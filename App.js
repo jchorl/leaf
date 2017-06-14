@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StatusBar } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import { TransactionScreenNavigator } from './components/TransactionScreenNavigator';
+import TransactionScreenNavigator from './components/TransactionScreenNavigator';
 import db from './DB';
 
 

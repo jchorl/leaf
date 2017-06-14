@@ -1,21 +1,27 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { TabNavigator } from "react-navigation";
+import Exponent from 'expo';
 import TransactionList from '../TransactionList';
 
-class TransactionListScreen extends React.Component {
-  render() {
-    return <TransactionList />;
-  }
-}
-
 class TransactionGraphsScreen extends React.Component {
-  render() {
-    return <Text>Transaction graphs.</Text>;
-  }
+    static navigationOptions = {
+        title: 'Graphs'
+    }
+
+    render() {
+        return <Text>Transaction graphs.</Text>;
+    }
 }
 
-export const TransactionScreenNavigator = TabNavigator({
-  Transactions: { screen: TransactionListScreen },
-  Graphs: { screen: TransactionGraphsScreen }
+const tabNav = TabNavigator({
+    Transactions: { screen: TransactionList },
+    Graphs: { screen: TransactionGraphsScreen }
 });
+
+tabNav.navigationOptions = {
+    title: 'LEAF',
+    headerStyle: { marginTop: Exponent.Constants.statusBarHeight }
+};
+
+export default tabNav;

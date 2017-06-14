@@ -7,8 +7,7 @@ import Transaction from '../Transaction';
 
 export default class TransactionList extends React.Component {
     static navigationOptions = {
-        title: 'Transactions',
-        headerStyle: { marginTop: Exponent.Constants.statusBarHeight }
+        title: 'Transactions'
     }
 
     constructor(props) {
