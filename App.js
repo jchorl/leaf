@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StatusBar } from 'react-native';
 import { StackNavigator } from 'react-navigation';
-import TransactionList from './components/TransactionList';
+import { TransactionScreenNavigator } from './components/TransactionScreenNavigator';
 import db from './DB';
 
 
@@ -18,5 +18,5 @@ db.transaction(tx => {
 });
 
 export default StackNavigator({
-    Home: { screen: TransactionList }
+    Home: { screen: TransactionScreenNavigator }
 });
