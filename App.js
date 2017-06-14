@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StatusBar } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import Exponent from 'expo';
 import TransactionScreenNavigator from './components/TransactionScreenNavigator';
 import db from './DB';
 
@@ -18,5 +19,11 @@ db.transaction(tx => {
 });
 
 export default StackNavigator({
-    Home: { screen: TransactionScreenNavigator }
+    Home: {
+        screen: TransactionScreenNavigator,
+        navigationOptions: {
+            title: 'LEAF',
+            headerStyle: { marginTop: Exponent.Constants.statusBarHeight, paddingRight: 10 }
+        }
+    }
 });
