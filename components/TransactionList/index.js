@@ -1,14 +1,15 @@
 import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import Exponent from 'expo';
 import db from '../../DB';
 import Transaction from '../Transaction';
 
-class TransactionList extends React.Component {
-    static propTypes = {
-        transactions: PropTypes.object.isRequired
-    };
+export default class TransactionList extends React.Component {
+    static navigationOptions = {
+        title: 'Transactions',
+        headerStyle: { marginTop: Exponent.Constants.statusBarHeight }
+    }
 
     constructor(props) {
         super(props);
@@ -32,12 +33,6 @@ class TransactionList extends React.Component {
         this.fetchTransactions();
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.transactions.updated !== this.props.transactions.updated) {
-            this.fetchTransactions();
-        }
-    }
-
     render() {
         const { transactions } = this.state;
         return (
@@ -53,9 +48,3 @@ const styles = StyleSheet.create({
         flex: 1
     },
 });
-
-export default connect(state => {
-    return {
-        transactions: state.transactions
-    };
-})(TransactionList);

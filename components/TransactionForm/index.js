@@ -1,15 +1,10 @@
 import React from 'react';
 import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { transactionsUpdated } from '../../actions';
 import db from '../../DB';
 
 class TransactionForm extends React.Component {
-    static propTypes = {
-        dispatch: PropTypes.func.isRequired
-    }
-
     constructor() {
         super();
         this.state = {
@@ -19,10 +14,9 @@ class TransactionForm extends React.Component {
         }
     }
 
-    update = () => {
-        const { dispatch } = this.props;
-
-        dispatch(transactionsUpdated());
+    closeForm = () => {
+        // TODO implement me
+        // should close form
     }
 
     onSubmit = () => {
@@ -34,11 +28,10 @@ class TransactionForm extends React.Component {
 
         // only store in cents
         const amountCents = amount * 100;
-        console.log(`Submitting form with values ${name}, ${category}, ${amountCents}`);
         db.transaction(
             tx => tx.executeSql('insert into transactions (name, category, amount) values (?, ?, ?)', [name, category, amountCents]),
             null,
-            this.update
+            this.closeForm
         );
     }
 
@@ -84,5 +77,3 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 });
-
-export default connect()(TransactionForm);
