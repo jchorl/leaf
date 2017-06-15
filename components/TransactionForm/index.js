@@ -13,13 +13,25 @@ import { transactionsUpdated } from '../../actions';
 import db from '../../DB';
 
 class TransactionForm extends React.Component {
-    constructor() {
-        super();
-        this.state = {
+    constructor(props) {
+        super(props);
+        const { navigation } = this.props;
+        console.log('logging params');
+        const state = {
             name: '',
             category: '',
             amount: ''
         }
+
+        const params = navigation.state.params;
+        if (params) {
+            state.id = params.transaction.id;
+            state.name = params.transaction.name;
+            state.category = params.transaction.category;
+            state.amount = (params.transaction.amount / 100.0) + '';
+        }
+
+        this.state = state;
     }
 
     closeForm = () => {
@@ -30,6 +42,7 @@ class TransactionForm extends React.Component {
 
     onSubmit = () => {
         const {
+            id,
             name,
             category,
             amount
@@ -37,11 +50,19 @@ class TransactionForm extends React.Component {
 
         // only store in cents
         const amountCents = amount * 100;
-        db.transaction(
-            tx => tx.executeSql('insert into transactions (name, category, amount) values (?, ?, ?)', [name, category, amountCents]),
-            null,
-            this.closeForm
-        );
+        if (!id) {
+            db.transaction(
+                tx => tx.executeSql('insert into transactions (name, category, amount) values (?, ?, ?)', [name, category, amountCents]),
+                null,
+                this.closeForm
+            );
+        } else {
+            db.transaction(
+                tx => tx.executeSql('update transactions set name=?, category=?, amount=? where id=?', [name, category, amountCents, id]),
+                null,
+                this.closeForm
+            );
+        }
     }
 
     render() {
@@ -75,7 +96,7 @@ class TransactionForm extends React.Component {
                         returnKeyType="send"
                     />
                 </View>
-                <Button onPress={ this.onSubmit } title="Create" />
+                <Button onPress={ this.onSubmit } title={ this.state.id ? 'Update' : 'Create' } />
             </View>
         );
     }

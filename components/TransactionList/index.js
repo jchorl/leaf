@@ -25,11 +25,16 @@ class TransactionList extends React.Component {
         }
     }
 
+    edit = transaction => () => {
+        const { navigation } = this.props;
+        navigation.navigate('EditTransaction', { transaction });
+    }
+
     render() {
         const { transactions } = this.state;
         return (
                 <ScrollView style={styles.container}>
-                    { transactions.map(t => <Transaction key={ t.id } transaction={ t } />) }
+                    { transactions.map(t => <Transaction key={ t.id } transaction={ t } goToEdit={ this.edit(t) } />) }
                 </ScrollView>
                 );
     }

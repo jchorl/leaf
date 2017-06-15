@@ -10,17 +10,17 @@ export default class Transaction extends React.Component {
             category: PropTypes.string.isRequired,
             amount: PropTypes.number.isRequired
         }),
-        navigate: PropTypes.func.isRequired
+        goToEdit: PropTypes.func.isRequired
     }
 
     render() {
         const {
             transaction: { name, category, amount },
-            navigate
+            goToEdit
         } = this.props;
 
         return (
-                <TouchableOpacity style={ styles.container } onPress={ () => console.log(navigate) }>
+                <TouchableOpacity style={ styles.container } onPress={ goToEdit }>
                     <View style={ styles.nameCategoryColumn }>
                         <Text style={ styles.field }>{ name }</Text>
                         <Text style={ styles.field }>{ category }</Text>
