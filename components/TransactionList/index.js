@@ -11,10 +11,6 @@ import db from '../../DB';
 import Transaction from '../Transaction';
 
 export default class TransactionList extends React.Component {
-    static navigationOptions = {
-        title: 'Transactions'
-    }
-
     constructor(props) {
         super(props);
 
