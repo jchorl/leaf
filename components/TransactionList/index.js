@@ -7,7 +7,7 @@ import {
 import PropTypes from 'prop-types';
 import Exponent from 'expo';
 import { TRANSACTIONS_UPDATED_EVENT } from '../../constants';
-import db from '../../DB';
+import { fetchTransactions } from '../../DB';
 import Transaction from '../Transaction';
 
 export default class TransactionList extends React.Component {
@@ -19,18 +19,8 @@ export default class TransactionList extends React.Component {
         };
     }
 
-    fetchTransactions = () => {
-        db.transaction(tx => {
-            tx.executeSql(
-                    `select * from transactions;`,
-                    [],
-                    (_, { rows: { _array } }) => this.setState({ transactions: _array })
-                    );
-        });
-    }
-
     componentWillMount() {
-        this.fetchTransactions();
+        fetchTransactions(transactions => this.setState({ transactions }));
         DeviceEventEmitter.addListener(TRANSACTIONS_UPDATED_EVENT, this.fetchTransactions);
     }
 
