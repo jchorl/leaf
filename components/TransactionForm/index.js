@@ -4,15 +4,15 @@ import {
     StyleSheet,
     Text,
     View,
-    TextInput,
-    DeviceEventEmitter
+    TextInput
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
-import { TRANSACTIONS_UPDATED_EVENT } from '../../constants';
+import { connect } from 'react-redux';
+import { transactionsUpdated } from '../../actions';
 import db from '../../DB';
 
-export default class TransactionForm extends React.Component {
+class TransactionForm extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -23,8 +23,8 @@ export default class TransactionForm extends React.Component {
     }
 
     closeForm = () => {
-        const { navigation: { goBack } } = this.props;
-        DeviceEventEmitter.emit(TRANSACTIONS_UPDATED_EVENT, {});
+        const { dispatch, navigation: { goBack } } = this.props;
+        dispatch(transactionsUpdated());
         goBack();
     }
 
@@ -86,3 +86,5 @@ const styles = StyleSheet.create({
         flex: 1,
     },
 });
+
+export default connect()(TransactionForm);

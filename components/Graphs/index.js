@@ -1,13 +1,10 @@
 import React from 'react';
-import {
-    View,
-    DeviceEventEmitter
-} from 'react-native';
+import { View } from 'react-native';
 import { Pie } from 'react-native-pathjs-charts';
+import { connect } from 'react-redux';
 import { fetchTransactions } from '../../DB';
-import { TRANSACTIONS_UPDATED_EVENT } from '../../constants';
 
-export default class Graphs extends React.Component {
+class Graphs extends React.Component {
     constructor(props) {
         super(props);
 
@@ -18,7 +15,12 @@ export default class Graphs extends React.Component {
 
     componentWillMount() {
         fetchTransactions(transactions => this.setState({ transactions }));
-        DeviceEventEmitter.addListener(TRANSACTIONS_UPDATED_EVENT, this.fetchTransactions);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.updateCounter !== this.props.updateCounter) {
+            fetchTransactions(transactions => this.setState({ transactions }));
+        }
     }
 
     render() {
@@ -76,3 +78,5 @@ export default class Graphs extends React.Component {
                );
     }
 }
+
+export default connect(state => ({ updateCounter: state.updateCounter }))(Graphs);

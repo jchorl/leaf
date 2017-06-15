@@ -1,16 +1,12 @@
 import React from 'react';
-import {
-    StyleSheet,
-    ScrollView,
-    DeviceEventEmitter
-} from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import Exponent from 'expo';
-import { TRANSACTIONS_UPDATED_EVENT } from '../../constants';
+import { connect } from 'react-redux';
 import { fetchTransactions } from '../../DB';
 import Transaction from '../Transaction';
 
-export default class TransactionList extends React.Component {
+class TransactionList extends React.Component {
     constructor(props) {
         super(props);
 
@@ -21,7 +17,12 @@ export default class TransactionList extends React.Component {
 
     componentWillMount() {
         fetchTransactions(transactions => this.setState({ transactions }));
-        DeviceEventEmitter.addListener(TRANSACTIONS_UPDATED_EVENT, this.fetchTransactions);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.updateCounter !== this.props.updateCounter) {
+            fetchTransactions(transactions => this.setState({ transactions }));
+        }
     }
 
     render() {
@@ -39,3 +40,5 @@ const styles = StyleSheet.create({
         flex: 1
     },
 });
+
+export default connect(state => ({ updateCounter: state.updateCounter }))(TransactionList);

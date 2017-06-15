@@ -2,6 +2,9 @@ import React from 'react';
 import { Button } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Exponent from 'expo';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import reducer from './reducers';
 import TransactionScreenNavigator from './components/TransactionScreenNavigator';
 import TransactionForm from './components/TransactionForm';
 import db from './DB';
@@ -19,7 +22,7 @@ db.transaction(tx => {
             );
 });
 
-export default StackNavigator({
+const AppNavigator = StackNavigator({
     Home: {
         screen: TransactionScreenNavigator,
         navigationOptions: ({ navigation: { navigate } }) => ({
@@ -43,3 +46,15 @@ export default StackNavigator({
         }
     }
 });
+
+const store = createStore(reducer);
+
+export default class App extends React.Component {
+    render() {
+        return (
+                <Provider store={store}>
+                    <AppNavigator />
+                </Provider>
+               );
+    }
+}
