@@ -1,10 +1,18 @@
 import React from 'react';
-import { Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import {
+    Button,
+    StyleSheet,
+    Text,
+    View,
+    TextInput,
+    DeviceEventEmitter
+} from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
-import { transactionsUpdated } from '../../actions';
+import { TRANSACTIONS_UPDATED_EVENT } from '../../constants';
 import db from '../../DB';
 
-class TransactionForm extends React.Component {
+export default class TransactionForm extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -15,8 +23,9 @@ class TransactionForm extends React.Component {
     }
 
     closeForm = () => {
-        // TODO implement me
-        // should close form
+        const { navigation: { goBack } } = this.props;
+        DeviceEventEmitter.emit(TRANSACTIONS_UPDATED_EVENT, {});
+        goBack();
     }
 
     onSubmit = () => {

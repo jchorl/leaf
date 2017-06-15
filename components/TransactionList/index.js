@@ -1,7 +1,12 @@
 import React from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import {
+    StyleSheet,
+    ScrollView,
+    DeviceEventEmitter
+} from 'react-native';
 import PropTypes from 'prop-types';
 import Exponent from 'expo';
+import { TRANSACTIONS_UPDATED_EVENT } from '../../constants';
 import db from '../../DB';
 import Transaction from '../Transaction';
 
@@ -30,6 +35,7 @@ export default class TransactionList extends React.Component {
 
     componentWillMount() {
         this.fetchTransactions();
+        DeviceEventEmitter.addListener(TRANSACTIONS_UPDATED_EVENT, this.fetchTransactions);
     }
 
     render() {

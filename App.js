@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, StatusBar } from 'react-native';
+import { Button } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Exponent from 'expo';
 import TransactionScreenNavigator from './components/TransactionScreenNavigator';
+import TransactionForm from './components/TransactionForm';
 import db from './DB';
 
 
@@ -21,9 +22,17 @@ db.transaction(tx => {
 export default StackNavigator({
     Home: {
         screen: TransactionScreenNavigator,
-        navigationOptions: {
+        navigationOptions: ({ navigation: { navigate } }) => ({
             title: 'LEAF',
-            headerStyle: { marginTop: Exponent.Constants.statusBarHeight, paddingRight: 10 }
+            headerStyle: { marginTop: Exponent.Constants.statusBarHeight, paddingRight: 10 },
+            headerRight: <Button title="New" onPress={ () => navigate('NewTransaction') } />
+        })
+    },
+    NewTransaction: {
+        screen: TransactionForm,
+        navigationOptions: {
+            title: 'Create Transaction',
+            headerStyle: { marginTop: Exponent.Constants.statusBarHeight }
         }
-    }
+    },
 });
