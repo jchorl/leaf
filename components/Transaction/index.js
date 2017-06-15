@@ -15,10 +15,14 @@ export default class Transaction extends React.Component {
         const { transaction: { name, category, amount } } = this.props;
 
         return (
-                <View style={styles.container}>
-                    <Text>Name: { name }</Text>
-                    <Text>Category: { category }</Text>
-                    <Text>Amount: { amount / 100.0 }</Text>
+                <View style={ styles.container }>
+                    <View style={ styles.nameCategoryColumn }>
+                        <Text style={ styles.field }>{ name }</Text>
+                        <Text style={ styles.field }>{ category }</Text>
+                    </View>
+                    <View style={ styles.priceColumn }>
+                        <Text style={ styles.field }>{ amount / 100.0 }</Text>
+                    </View>
                 </View>
                 );
     }
@@ -27,5 +31,19 @@ export default class Transaction extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        flexDirection: 'row',
+        paddingHorizontal: 20,
+        padding: 20,
     },
+    nameCategoryColumn: {
+        flex: 0.5
+    },
+    priceColumn: {
+        flex: 0.5,
+        alignItems: 'flex-end'
+    },
+    field: {
+        flex: 0.33,
+        fontSize: 18
+    }
 });
