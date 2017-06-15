@@ -35,4 +35,11 @@ export default StackNavigator({
             headerStyle: { marginTop: Exponent.Constants.statusBarHeight }
         }
     },
+    EditTransaction: {
+        screen: TransactionForm,
+        navigationOptions: {
+            title: 'Edit Transaction',
+            headerStyle: { marginTop: Exponent.Constants.statusBarHeight }
+        }
+    }
 });
