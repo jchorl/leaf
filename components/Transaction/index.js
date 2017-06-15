@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 import PropTypes from 'prop-types';
+import { amountToString } from '../../util';
 
 export default class Transaction extends React.Component {
     static propTypes = {
@@ -21,7 +22,7 @@ export default class Transaction extends React.Component {
                         <Text style={ styles.field }>{ category }</Text>
                     </View>
                     <View style={ styles.priceColumn }>
-                        <Text style={ styles.field }>{ amount / 100.0 }</Text>
+                        <Text style={ styles.field }>{ amountToString(amount) }</Text>
                     </View>
                 </View>
                 );
