@@ -26,21 +26,19 @@ class Graphs extends React.Component {
     render() {
         // TODO: we have all the transactions stored in this.state.transactions. let's process that data and show useful things on the graph
         const { transactions } = this.state;
-        console.log(transactions);
+        // console.log(transactions);
 
-        let data = [{
-            "name": "Washington",
-            "population": 7694980
-        }, {
-            "name": "Oregon",
-            "population": 2584160
-        }, {
-            "name": "Minnesota",
-            "population": 6590667
-        }, {
-            "name": "Alaska",
-            "population": 7284698
-        }]
+        let data = {}
+        for (let transaction of transactions) {
+          let category = transaction.category;
+          if (!data.hasOwnProperty(category)) {
+            data[category] = {"name": category, "total_amount": transaction.amount};
+          } else {
+            data[category].amount += transaction.amount;
+          }
+        }
+
+        data = Object.keys(data).map(key => data[key]); // data = [{ 'name': 'category', 'total_amount': total_amount }]
 
         let options = {
             margin: {
@@ -73,7 +71,7 @@ class Graphs extends React.Component {
                 <Pie
                     data={data}
                     options={options}
-                    accessorKey="population" />
+                    accessorKey="total_amount" />
                 </View>
                );
     }
