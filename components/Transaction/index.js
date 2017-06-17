@@ -1,3 +1,4 @@
+import Moment from 'moment';
 import React from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import PropTypes from 'prop-types';
@@ -15,21 +16,26 @@ export default class Transaction extends React.Component {
 
     render() {
         const {
-            transaction: { name, category, amount },
+            transaction: { timestamp, name, category, amount },
             goToEdit
         } = this.props;
 
+        Moment.locale('en');
+
         return (
-                <TouchableOpacity style={ styles.container } onPress={ goToEdit }>
-                    <View style={ styles.nameCategoryColumn }>
-                        <Text style={ styles.field }>{ name }</Text>
-                        <Text style={ styles.field }>{ category }</Text>
-                    </View>
-                    <View style={ styles.priceColumn }>
-                        <Text style={ styles.field }>{ amountToString(amount) }</Text>
-                    </View>
-                </TouchableOpacity>
-                );
+            <TouchableOpacity style={ styles.container } onPress={ goToEdit }>
+                <View style={ styles.timestampColumn }>
+                    <Text style={ styles.field }>{ Moment(timestamp).format('YYYY/MM/DD') }</Text>
+                </View>
+                <View style={ styles.nameCategoryColumn }>
+                    <Text style={ styles.field }>{ name }</Text>
+                    <Text style={ styles.field }>{ category }</Text>
+                </View>
+                <View style={ styles.priceColumn }>
+                    <Text style={ styles.field }>{ amountToString(amount) }</Text>
+                </View>
+            </TouchableOpacity>
+        );
     }
 }
 
@@ -39,6 +45,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 20,
         padding: 20,
+    },
+    timestampColumn: {
+        flex: 0.5
     },
     nameCategoryColumn: {
         flex: 0.5

@@ -3,6 +3,7 @@ import { StyleSheet, ScrollView } from 'react-native';
 import PropTypes from 'prop-types';
 import Exponent from 'expo';
 import { connect } from 'react-redux';
+
 import { fetchTransactions } from '../../DB';
 import Transaction from '../Transaction';
 
@@ -33,10 +34,10 @@ class TransactionList extends React.Component {
     render() {
         const { transactions } = this.state;
         return (
-                <ScrollView style={styles.container}>
-                    { transactions.map(t => <Transaction key={ t.id } transaction={ t } goToEdit={ this.edit(t) } />) }
-                </ScrollView>
-                );
+            <ScrollView style={styles.container}>
+                { transactions.map(t => <Transaction key={ t.id } transaction={ t } goToEdit={ this.edit(t) } />) }
+            </ScrollView>
+        );
     }
 }
 

@@ -14,11 +14,13 @@ db.transaction(tx => {
     tx.executeSql(
             `CREATE TABLE IF NOT EXISTS transactions (
                 id INTEGER PRIMARY KEY NOT NULL,
+                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
                 name TEXT,
                 category TEXT,
                 amount INT
                 );
-            CREATE INDEX transactions_category_idx ON transactions (category);`
+            CREATE INDEX transactions_category_idx ON transactions (category);
+            CREATE INDEX transactions_timestamp_idx ON transactions (timestamp);`
             );
 });
 
