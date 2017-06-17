@@ -71,6 +71,7 @@ class TransactionForm extends React.Component {
                 <View>
                     <Text>Name: </Text>
                     <TextInput
+                        style={{height: 30, borderWidth: 1}}
                         onChangeText={ name => this.setState({ name }) }
                         value={ this.state.name }
                         defaultValue="Meat"
@@ -80,6 +81,7 @@ class TransactionForm extends React.Component {
                 <View>
                     <Text>Category: </Text>
                     <TextInput
+                        style={{height: 30, borderWidth: 1}}
                         onChangeText={ category => this.setState({ category }) }
                         value={ this.state.category }
                         defaultValue="Groceries"
@@ -89,6 +91,7 @@ class TransactionForm extends React.Component {
                 <View>
                     <Text>Amount: </Text>
                     <TextInput
+                        style={{height: 30, borderWidth: 1}}
                         onChangeText={ amount => this.setState({ amount }) }
                         value={ this.state.amount }
                         defaultValue="1.50"
