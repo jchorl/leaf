@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { Pie } from 'react-native-pathjs-charts';
 import { connect } from 'react-redux';
 import { fetchTransactions } from '../../DB';
@@ -43,8 +43,6 @@ class Graphs extends React.Component {
         let options = {
             margin: {
                 top: 20,
-                left: 20,
-                right: 20,
                 bottom: 20
             },
             width: 350,
@@ -60,21 +58,31 @@ class Graphs extends React.Component {
             },
             label: {
                 fontFamily: 'Arial',
-                fontSize: 8,
+                fontSize: 10,
                 fontWeight: true,
                 color: '#ECF0F1'
             }
         }
 
         return (
+            <View style={styles.content}>
+                <Text>Spending Distribution</Text>
                 <View>
-                <Pie
-                    data={data}
-                    options={options}
-                    accessorKey="total_amount" />
+                    <Pie
+                        data={data}
+                        options={options}
+                        accessorKey="total_amount" />
                 </View>
-               );
+            </View>
+        );
     }
 }
+
+const styles = StyleSheet.create({
+    content: {
+        alignItems: 'center',
+        flex: 1,
+    },
+})
 
 export default connect(state => ({ updateCounter: state.updateCounter }))(Graphs);
