@@ -7,7 +7,6 @@ import { amountToString } from '../../util';
 export default class Transaction extends React.Component {
     static propTypes = {
         transaction: PropTypes.shape({
-            date: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired,
             category: PropTypes.string.isRequired,
             amount: PropTypes.number.isRequired
@@ -17,7 +16,7 @@ export default class Transaction extends React.Component {
 
     render() {
         const {
-            transaction: { date, name, category, amount },
+            transaction: { name, category, amount },
             goToEdit
         } = this.props;
 
@@ -25,9 +24,6 @@ export default class Transaction extends React.Component {
 
         return (
             <TouchableOpacity style={ styles.container } onPress={ goToEdit }>
-                <View style={ styles.dateColumn }>
-                    <Text style={ styles.field }>{ date }</Text>
-                </View>
                 <View style={ styles.nameCategoryColumn }>
                     <Text style={ styles.field }>{ name }</Text>
                     <Text style={ styles.category }>{ category }</Text>
@@ -46,9 +42,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: 20,
         padding: 10,
-    },
-    dateColumn: {
-        flex: 0.5
     },
     nameCategoryColumn: {
         flex: 0.5

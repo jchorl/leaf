@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, ScrollView } from 'react-native';
+import { StyleSheet, ScrollView, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
 import Exponent from 'expo';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import { fetchTransactions } from '../../DB';
 import Transaction from '../Transaction';
@@ -31,11 +32,26 @@ class TransactionList extends React.Component {
         navigation.navigate('EditTransaction', { transaction });
     }
 
+    renderTransactions(transactions) {
+        var groupedByDate = _.groupBy(transactions, 'date');
+        var renderedGroups = Object.keys(groupedByDate).map(date => this.renderGroup(date, groupedByDate[date]));
+
+        return renderedGroups;
+    }
+
+    renderGroup(date, group) {
+        return (
+            group.map(t => <Transaction key={ t.id } transaction = { t } goToEdit={ this.edit(t) } />)
+        );
+    }
+
     render() {
         const { transactions } = this.state;
+        const { navigation } = this.props;
+
         return (
             <ScrollView style={styles.container}>
-                { transactions.map(t => <Transaction key={ t.id } transaction={ t } goToEdit={ this.edit(t) } />) }
+                { this.renderTransactions(transactions) }
             </ScrollView>
         );
     }
