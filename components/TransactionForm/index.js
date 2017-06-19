@@ -68,30 +68,30 @@ class TransactionForm extends React.Component {
     render() {
         return (
             <View style={styles.container}>
-                <View>
+                <View style={styles.inputField}>
                     <Text>Name: </Text>
                     <TextInput
-                        style={{height: 30, borderWidth: 1}}
+                        style={styles.input}
                         onChangeText={ name => this.setState({ name }) }
                         value={ this.state.name }
                         defaultValue="Meat"
                         returnKeyType="next"
                     />
                 </View>
-                <View>
+                <View style={styles.inputField}>
                     <Text>Category: </Text>
                     <TextInput
-                        style={{height: 30, borderWidth: 1}}
+                        style={styles.input}
                         onChangeText={ category => this.setState({ category }) }
                         value={ this.state.category }
                         defaultValue="Groceries"
                         returnKeyType="next"
                     />
                 </View>
-                <View>
+                <View style={styles.inputField}>
                     <Text>Amount: </Text>
                     <TextInput
-                        style={{height: 30, borderWidth: 1}}
+                        style={styles.input}
                         onChangeText={ amount => this.setState({ amount }) }
                         value={ this.state.amount }
                         defaultValue="1.50"
@@ -108,6 +108,14 @@ class TransactionForm extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        padding: 20,
+    },
+    inputField: {
+        marginTop: 5,
+        marginBottom: 30,
+    },
+    input: {
+        padding: 10,
     },
 });
 
