@@ -9,19 +9,21 @@ export default class Transaction extends React.Component {
         transaction: PropTypes.shape({
             name: PropTypes.string.isRequired,
             category: PropTypes.string.isRequired,
-            amount: PropTypes.number.isRequired
+            amount: PropTypes.number.isRequired,
+            date: PropTypes.string.isRequired
         }),
         goToEdit: PropTypes.func.isRequired
     }
 
     render() {
         const {
-            transaction: { name, category, amount },
+            transaction: { name, category, amount, date },
             goToEdit
         } = this.props;
 
         Moment.locale('en');
 
+        console.log(date);
         return (
             <TouchableOpacity style={ styles.container } onPress={ goToEdit }>
                 <View style={ styles.nameCategoryColumn }>
@@ -30,6 +32,7 @@ export default class Transaction extends React.Component {
                 </View>
                 <View style={ styles.priceColumn }>
                     <Text style={ styles.field }>{ amountToString(amount) }</Text>
+                    <Text style={ styles.category }>{ date }</Text>
                 </View>
             </TouchableOpacity>
         );
