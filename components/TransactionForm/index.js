@@ -13,11 +13,6 @@ import DatePicker from 'react-native-datepicker';
 import { transactionsUpdated } from '../../actions';
 import db from '../../DB';
 
-function parseDate(input) {
-    let parts = input.split('-');
-    return new Date(parts[0], parts[1]-1, parts[2]);
-}
-
 function dateString(date) {
     return date.getFullYear() + '-'
         + ('0' + (date.getMonth()+1)).slice(-2) + '-'
@@ -41,7 +36,7 @@ class TransactionForm extends React.Component {
             state.name = params.transaction.name;
             state.category = params.transaction.category;
             state.amount = (params.transaction.amount / 100.0) + '';
-            state.date = parseDate(params.transaction.date);
+            state.date = params.transaction.date;
         }
 
         this.state = state;
