@@ -18,6 +18,12 @@ function parseDate(input) {
     return new Date(parts[0], parts[1]-1, parts[2]);
 }
 
+function dateString(date) {
+    return date.getFullYear() + '-'
+        + ('0' + (date.getMonth()+1)).slice(-2) + '-'
+        + ('0' + date.getDate()).slice(-2);
+}
+
 class TransactionForm extends React.Component {
     constructor(props) {
         super(props);
@@ -26,7 +32,7 @@ class TransactionForm extends React.Component {
             name: '',
             category: '',
             amount: '',
-            date: new Date()
+            date: dateString(new Date())
         }
 
         const params = navigation.state.params;
