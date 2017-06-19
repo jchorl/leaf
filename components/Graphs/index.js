@@ -24,9 +24,7 @@ class Graphs extends React.Component {
     }
 
     render() {
-        // TODO: we have all the transactions stored in this.state.transactions. let's process that data and show useful things on the graph
         const { transactions } = this.state;
-        // console.log(transactions);
 
         let data = {}
         for (let transaction of transactions) {
@@ -66,7 +64,11 @@ class Graphs extends React.Component {
 
         return (
             <View style={styles.content}>
-                <Text>Spending Distribution</Text>
+                {
+                data.length !== 0
+                ? <Text style={styles.graphTitle}>Spending by Category</Text>
+                : <Text>Please enter transactions to see categorized spending</Text>
+                }
                 <View>
                     <Pie
                         data={data}
@@ -82,6 +84,11 @@ const styles = StyleSheet.create({
     content: {
         alignItems: 'center',
         flex: 1,
+    },
+    graphTitle: {
+        marginTop: 10,
+        marginBottom: 10,
+        fontSize: 20,
     },
 })
 
