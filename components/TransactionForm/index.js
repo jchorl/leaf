@@ -4,13 +4,15 @@ import {
     StyleSheet,
     Text,
     View,
-    TextInput
+    TextInput,
+    TouchableOpacity
 } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import DatePicker from 'react-native-datepicker';
-import { transactionsUpdated } from '../../actions';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { setBarcodeInfo, transactionsUpdated } from '../../actions';
 import db from '../../DB';
 
 function dateString(date) {
@@ -40,6 +42,15 @@ class TransactionForm extends React.Component {
         }
 
         this.state = state;
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.barcodeInfo.name !== this.props.barcodeInfo.name && nextProps.barcodeInfo.name) {
+            this.setState({
+                name: nextProps.barcodeInfo.name,
+                amount: (nextProps.barcodeInfo.amount / 100.0 + '')
+            });
+        }
     }
 
     closeForm = () => {
@@ -74,18 +85,29 @@ class TransactionForm extends React.Component {
         }
     }
 
+    scanBarcode = () => {
+        const { dispatch, navigation } = this.props;
+        dispatch(setBarcodeInfo({}));
+        navigation.navigate('ScanBarcode');
+    }
+
     render() {
         return (
                 <View style={styles.container}>
-                    <View style={styles.inputField}>
-                        <Text>Name: </Text>
-                        <TextInput
-                            style={styles.input}
-                            onChangeText={ name => this.setState({ name }) }
-                            value={ this.state.name }
-                            defaultValue="Meat"
-                            returnKeyType="next"
-                        />
+                    <View style={styles.nameInputFieldAndBarcodeIcon}>
+                        <View style={[styles.inputField, styles.nameInputField]}>
+                            <Text>Name: </Text>
+                            <TextInput
+                                style={styles.input}
+                                onChangeText={ name => this.setState({ name }) }
+                                value={ this.state.name }
+                                defaultValue="Meat"
+                                returnKeyType="next"
+                            />
+                        </View>
+                        <TouchableOpacity style={styles.barcodeIconView} onPress={this.scanBarcode}>
+                            <MaterialCommunityIcons name="barcode-scan" size={50}/>
+                        </TouchableOpacity>
                     </View>
                     <View style={styles.inputField}>
                         <Text>Category: </Text>
@@ -144,6 +166,18 @@ const styles = StyleSheet.create({
     input: {
         padding: 10,
     },
+    nameInputFieldAndBarcodeIcon: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    nameInputField: {
+        flex: 4,
+    },
+    barcodeIconView: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+    },
 });
 
-export default connect()(TransactionForm);
+export default connect(state => ({ barcodeInfo: state.barcodeInfo }))(TransactionForm);
