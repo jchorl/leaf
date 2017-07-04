@@ -46,10 +46,16 @@ class TransactionForm extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.barcodeInfo.name !== this.props.barcodeInfo.name && nextProps.barcodeInfo.name) {
-            this.setState({
-                name: nextProps.barcodeInfo.name,
-                amount: (nextProps.barcodeInfo.amount / 100.0 + '')
-            });
+            const nextState = {
+                name: nextProps.barcodeInfo.name
+            }
+            if (nextProps.barcodeInfo.amount) {
+                nextState.amount = nextProps.barcodeInfo.amount / 100.0 + '';
+            }
+            if (nextProps.barcodeInfo.category) {
+                nextState.category = nextProps.barcodeInfo.category;
+            }
+            this.setState(nextState);
         }
     }
 

@@ -4406,6 +4406,10 @@ react-transform-hmr@^1.0.4:
     global "^4.3.0"
     react-proxy "^1.1.7"
 
+react-xml-parser@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-xml-parser/-/react-xml-parser-1.0.2.tgz#e51331ba5579e2f7df79d2e9c11088393e412f44"
+
 react@16.0.0-alpha.6:
   version "16.0.0-alpha.6"
   resolved "https://registry.yarnpkg.com/react/-/react-16.0.0-alpha.6.tgz#2ccb1afb4425ccc12f78a123a666f2e4c141adb9"
