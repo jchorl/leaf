@@ -7,6 +7,7 @@ import { createStore } from 'redux';
 import reducer from './reducers';
 import TransactionScreenNavigator from './components/TransactionScreenNavigator';
 import TransactionForm from './components/TransactionForm';
+import BarcodeScanner from './components/BarcodeScanner';
 import db from './DB';
 
 
@@ -46,7 +47,14 @@ const AppNavigator = StackNavigator({
             title: 'Edit Transaction',
             headerStyle: { marginTop: Exponent.Constants.statusBarHeight }
         }
-    }
+    },
+    ScanBarcode: {
+        screen: BarcodeScanner,
+        navigationOptions: {
+            title: 'Scan barcode',
+            headerStyle: { marginTop: Exponent.Constants.statusBarHeight }
+        }
+    },
 });
 
 const store = createStore(reducer);
