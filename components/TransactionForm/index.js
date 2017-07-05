@@ -38,7 +38,7 @@ class TransactionForm extends React.Component {
             state.name = params.transaction.name;
             state.category = params.transaction.category;
             state.amount = (params.transaction.amount / 100.0) + '';
-            state.date = params.transaction.date;
+            state.date = params.transaction.date || dateString(new Date());
         }
 
         this.state = state;
@@ -63,6 +63,14 @@ class TransactionForm extends React.Component {
         const { dispatch, navigation: { goBack } } = this.props;
         dispatch(transactionsUpdated());
         goBack();
+    }
+
+    createTemplate = () => {
+        const { navigation } = this.props;
+        navigation.navigate('NewTemplate', {
+            transaction: navigation.state.params.transaction,
+            formKey: navigation.state.key
+        });
     }
 
     onSubmit = () => {
@@ -111,9 +119,13 @@ class TransactionForm extends React.Component {
                                 returnKeyType="next"
                             />
                         </View>
-                        <TouchableOpacity style={styles.barcodeIconView} onPress={this.scanBarcode}>
-                            <MaterialCommunityIcons name="barcode-scan" size={50}/>
-                        </TouchableOpacity>
+                        { this.state.id ? (
+                            null
+                        ) : (
+                            <TouchableOpacity style={styles.barcodeIconView} onPress={this.scanBarcode}>
+                                <MaterialCommunityIcons name="barcode-scan" size={50}/>
+                            </TouchableOpacity>
+                        ) }
                     </View>
                     <View style={styles.inputField}>
                         <Text>Category: </Text>
@@ -154,6 +166,13 @@ class TransactionForm extends React.Component {
                             onDateChange={(date) => {this.setState({date})}}
                         />
                     </View>
+                    { this.state.id ? (
+                    <View style={styles.templateButton}>
+                        <Button onPress={ this.createTemplate } title="Create Template" />
+                    </View>
+                    ) : (
+                    null
+                    ) }
                     <Button onPress={ this.onSubmit } title={ this.state.id ? 'Update' : 'Create' } />
                 </View>
                 );
@@ -183,6 +202,9 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         justifyContent: 'flex-end',
+    },
+    templateButton: {
+        marginBottom: 20,
     },
 });
 
