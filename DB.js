@@ -55,3 +55,13 @@ export function fetchTransactions(callback) {
         );
     });
 }
+
+export function fetchTemplates(callback) {
+    db.transaction(tx => {
+        tx.executeSql(
+            `SELECT id, template_name, name, category, amount FROM templates`,
+            [],
+            (_, { rows: { _array } }) => callback(_array)
+        );
+    });
+}

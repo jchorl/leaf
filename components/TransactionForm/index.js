@@ -38,7 +38,7 @@ class TransactionForm extends React.Component {
             state.name = params.transaction.name;
             state.category = params.transaction.category;
             state.amount = (params.transaction.amount / 100.0) + '';
-            state.date = params.transaction.date;
+            state.date = params.transaction.date || dateString(new Date());
         }
 
         this.state = state;

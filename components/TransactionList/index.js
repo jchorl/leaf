@@ -7,6 +7,7 @@ import _ from 'lodash';
 
 import { fetchTransactions } from '../../DB';
 import Transaction from '../Transaction';
+import TemplateBar from '../TemplateBar';
 
 class TransactionList extends React.Component {
     constructor(props) {
@@ -51,6 +52,7 @@ class TransactionList extends React.Component {
 
         return (
             <ScrollView style={styles.container}>
+                <TemplateBar navigation={ navigation } />
                 { this.renderTransactions(transactions) }
             </ScrollView>
         );
