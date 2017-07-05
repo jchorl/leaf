@@ -5,6 +5,13 @@ export function transactionsUpdated() {
     };
 }
 
+export const TEMPLATES_UPDATED = 'TEMPLATES_UPDATED';
+export function templatesUpdated() {
+    return {
+        type: TEMPLATES_UPDATED
+    };
+}
+
 export const SET_BARCODE_INFO = 'SET_BARCODE_INFO';
 export function setBarcodeInfo(barcodeInfo) {
     return {

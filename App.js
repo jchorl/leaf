@@ -7,23 +7,12 @@ import { createStore } from 'redux';
 import reducer from './reducers';
 import TransactionScreenNavigator from './components/TransactionScreenNavigator';
 import TransactionForm from './components/TransactionForm';
+import TemplateForm from './components/TemplateForm';
 import BarcodeScanner from './components/BarcodeScanner';
-import db from './DB';
+import { dbinit } from './DB';
 
 
-db.transaction(tx => {
-    tx.executeSql(
-            `CREATE TABLE IF NOT EXISTS transactions (
-                id INTEGER PRIMARY KEY NOT NULL,
-                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-                name TEXT,
-                category TEXT,
-                amount INT
-                );
-            CREATE INDEX transactions_category_idx ON transactions (category);
-            CREATE INDEX transactions_timestamp_idx ON transactions (timestamp);`
-            );
-});
+dbinit();
 
 const AppNavigator = StackNavigator({
     Home: {
@@ -45,6 +34,13 @@ const AppNavigator = StackNavigator({
         screen: TransactionForm,
         navigationOptions: {
             title: 'Edit Transaction',
+            headerStyle: { marginTop: Exponent.Constants.statusBarHeight }
+        }
+    },
+    NewTemplate: {
+        screen: TemplateForm,
+        navigationOptions: {
+            title: 'Create Template',
             headerStyle: { marginTop: Exponent.Constants.statusBarHeight }
         }
     },
