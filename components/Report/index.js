@@ -1,42 +1,27 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Pie } from 'react-native-pathjs-charts';
-import { connect } from 'react-redux';
 import { fetchTransactions } from '../../DB';
 
-class Graphs extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            transactions: []
-        };
-    }
-
-    componentWillMount() {
-        fetchTransactions(transactions => this.setState({ transactions }));
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.updateCounter !== this.props.updateCounter) {
-            fetchTransactions(transactions => this.setState({ transactions }));
-        }
-    }
+export default class Report extends React.Component {
+    static navigationOptions = ({ navigation }) => ({
+        title: `Report for ${navigation.state.params.label}`,
+    });
 
     render() {
-        const { transactions } = this.state;
+        const { transactions } = this.props.navigation.state.params;
 
         let data = {}
         for (let transaction of transactions) {
           let category = transaction.category;
           if (!data.hasOwnProperty(category)) {
-            data[category] = {"name": category, "total_amount": transaction.amount};
-          } else {
-            data[category].amount += transaction.amount;
+            data[category] = {"name": category, "total_amount": 0};
           }
+          data[category].total_amount += transaction.amount;
         }
 
         data = Object.keys(data).map(key => data[key]); // data = [{ 'name': 'category', 'total_amount': total_amount }]
+        console.log(data);
 
         let options = {
             margin: {
@@ -61,6 +46,8 @@ class Graphs extends React.Component {
                 color: '#ECF0F1'
             }
         }
+
+        console.log('about to return the graph');
 
         return (
             <View style={styles.content}>
@@ -91,5 +78,3 @@ const styles = StyleSheet.create({
         fontSize: 20,
     },
 })
-
-export default connect(state => ({ updateCounter: state.updateCounter }))(Graphs);
