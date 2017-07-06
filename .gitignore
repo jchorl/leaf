@@ -1,6 +1,7 @@
-credentials.js
 node_modules/
 .expo/
+relay/credentials.js
+relay/node_modules/
 npm-debug.*
 b3a2f005a312f5eef1bdbdc61b0d4da5
 haste-map-react-native-packager-3b2cfb8c7824a9156d39a137d062cf09

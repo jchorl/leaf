@@ -1,0 +1,11 @@
+{
+  "name": "leafrelay",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "node-fetch": "^1.7.1",
+    "xml2js": "^0.4.17"
+  }
+}
