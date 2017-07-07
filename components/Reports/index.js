@@ -45,9 +45,9 @@ class TransactionList extends React.Component {
         this.setState({ data });
     }
 
-    goToReport = (label, transactions) => () => {
+    goToReport = (label, transactions, lastMonthTransactions, month, prevMonth) => () => {
         const { navigation } = this.props;
-        navigation.navigate('Report', { label, transactions });
+        navigation.navigate('Report', { label, transactions, lastMonthTransactions, month, prevMonth });
     }
 
     getOrderedYearMonthPairs = () => {
@@ -56,6 +56,7 @@ class TransactionList extends React.Component {
             for (let data of yearAndData.data) {
                 pairs.push({
                     year: yearAndData.year,
+                    monthNum: data.month,
                     month: MONTH_NAMES[data.month],
                     transactions: data.transactions,
                     total: data.total
@@ -79,12 +80,23 @@ class TransactionList extends React.Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-                { this.getOrderedYearMonthPairs().map(a => (
-                <TouchableOpacity key={ `${a.month},${a.year}` } style={ styles.reportRow } onPress={ this.goToReport(a.month + ', ' + a.year, a.transactions) }>
-                    <Text style={styles.biggerText}>{ `${a.month}, ${a.year}` }</Text>
-                    <Text style={styles.biggerText}>{ amountToString(a.total) }</Text>
+                { this.getOrderedYearMonthPairs().map((curr, index, arr) => {
+                let lastMonthTransactions;
+                let lastMonth;
+                try {
+                    if ((arr[index + 1].year === curr.year && arr[index + 1].monthNum === curr.monthNum - 1) ||
+                        (arr[index + 1].year === curr.year - 1 && arr[index + 1].monthNum === 11 && curr.monthNum === 0)) {
+                        lastMonth = arr[index + 1].month;
+                        lastMonthTransactions = arr[index + 1].transactions;
+                    }
+                } catch (e) {}
+                return (
+                <TouchableOpacity key={ `${curr.month},${curr.year}` } style={ styles.reportRow } onPress={ this.goToReport(curr.month + ', ' + curr.year, curr.transactions, lastMonthTransactions, curr.month, lastMonth) }>
+                    <Text style={styles.biggerText}>{ `${curr.month}, ${curr.year}` }</Text>
+                    <Text style={styles.biggerText}>{ amountToString(curr.total) }</Text>
                 </TouchableOpacity>
-                )) }
+                );
+                }) }
             </ScrollView>
         );
     }
