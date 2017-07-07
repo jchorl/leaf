@@ -41,7 +41,7 @@ class BarcodeScanner extends React.Component {
         fetch(`https://us-central1-leafrelay.cloudfunctions.net/leafrelay?id=${data.data}`)
             .then(resp => resp.json())
             .then(parsed => {
-                if (parsed.title !== '') {
+                if (parsed.title) {
                     dispatch(setBarcodeInfo({name: parsed.title, amount: parsed.amount, category: parsed.category}));
                 } else {
                     alert('The barcode was read successfully but the product could not be found');
