@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, ScrollView, Text, View } from 'react-native';
 import PropTypes from 'prop-types';
-import Exponent from 'expo';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 

@@ -5,6 +5,7 @@ import Exponent from 'expo';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from './reducers';
+import Report from './components/Report';
 import TransactionScreenNavigator from './components/TransactionScreenNavigator';
 import TransactionForm from './components/TransactionForm';
 import TemplateForm from './components/TemplateForm';
@@ -48,6 +49,12 @@ const AppNavigator = StackNavigator({
         screen: BarcodeScanner,
         navigationOptions: {
             title: 'Scan barcode',
+            headerStyle: { marginTop: Exponent.Constants.statusBarHeight }
+        }
+    },
+    Report: {
+        screen: Report,
+        navigationOptions: {
             headerStyle: { marginTop: Exponent.Constants.statusBarHeight }
         }
     },

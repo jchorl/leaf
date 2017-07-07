@@ -51,7 +51,14 @@ export function fetchTransactions(callback) {
             `SELECT id, strftime('%Y-%m-%d', timestamp) AS date, name, category, amount FROM transactions
             ORDER BY timestamp DESC;`,
             [],
-            (_, { rows: { _array } }) => callback(_array)
+            (_, { rows: { _array } }) => {
+                const processed = _array.map(t => {
+                    const utcDate = new Date(t.date);
+                    t.date = new Date(utcDate.getUTCFullYear(), utcDate.getUTCMonth(), utcDate.getUTCDate());
+                    return t;
+                });
+                return callback(processed);
+            }
         );
     });
 }

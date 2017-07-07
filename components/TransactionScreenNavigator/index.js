@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from 'react-native';
 import { TabNavigator } from "react-navigation";
 import TransactionList from '../TransactionList';
-import Graphs from '../Graphs';
+import Reports from '../Reports';
 
 export default TabNavigator({
     Transactions: {
@@ -11,10 +11,10 @@ export default TabNavigator({
             title: 'Transactions'
         }
     },
-    Graphs: {
-        screen: Graphs,
+    Reports: {
+        screen: Reports,
         navigationOptions: {
-            title: 'Graphs'
+            title: 'Reports'
         }
     }
 });
