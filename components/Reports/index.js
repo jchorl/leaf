@@ -9,7 +9,7 @@ import { fetchTransactions } from '../../DB';
 
 const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-class TransactionList extends React.Component {
+class Reports extends React.Component {
     constructor(props) {
         super(props);
 
@@ -118,4 +118,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(state => ({ updateCounter: state.updateCounter }))(TransactionList);
+export default connect(state => ({ updateCounter: state.updateCounter }))(Reports);
